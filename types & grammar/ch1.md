@@ -33,9 +33,9 @@ Coercion confusion is perhaps one of the most profound frustrations for JavaScri
 
 Armed with a full understanding of JavaScript types, we're aiming to illustrate why coercion's *bad reputation* is largely overhyped and somewhat undeserved -- to flip your perspective, to seeing coercion's power and usefulness. But first, we have to get a much better grip on values and types.
 
-## Built-in Types
+## Kiểu dữ liệu dựng sẵn
 
-JavaScript defines seven built-in types:
+JavaScript định nghĩa bảy kiểu dữ liệu dựng sẵn:
 
 * `null`
 * `undefined`
@@ -45,9 +45,9 @@ JavaScript defines seven built-in types:
 * `object`
 * `symbol` -- added in ES6!
 
-**Note:** All of these types except `object` are called "primitives".
+**Note:** Ngoại trừ `object`, tất cả các kiểu dữ liệu này được gọi là "primitives" (cơ sở).
 
-The `typeof` operator inspects the type of the given value, and always returns one of seven string values -- surprisingly, there's not an exact 1-to-1 match with the seven built-in types we just listed.
+Toán tử `typeof` kiểm tra kiểu dữ liệu của giá trị đã cho, và luôn luôn trả về một trong bảy chuỗi, thật ngạc nhiên, nó không trùng khớp 1-1 với bảy kiểu dữ liệu dựng sẵn mà chúng ta đã đề cập ở trên.
 
 ```js
 typeof undefined     === "undefined"; // true
@@ -60,17 +60,17 @@ typeof { life: 42 }  === "object";    // true
 typeof Symbol()      === "symbol";    // true
 ```
 
-These six listed types have values of the corresponding type and return a string value of the same name, as shown. `Symbol` is a new data type as of ES6, and will be covered in Chapter 3.
+Sáu loại này có kiểu dữ liệu tương ứng và trả về chuỗi trùng với tên như trên. `Symbol` là kiểu dữ liệu mới trong ES6 và sẽ được đề cập đến trong chương 3.
 
-As you may have noticed, I excluded `null` from the above listing. It's *special* -- special in the sense that it's buggy when combined with the `typeof` operator:
+Như bạn đã thấy, tôi đã loại `null` khỏi danh sách trên. Nó *đặc biệt* -- đặc biệt ở chỗ nó sẽ có lỗi khi chúng ra dùng nó với toán tử `typeof`:
 
 ```js
 typeof null === "object"; // true
 ```
 
-It would have been nice (and correct!) if it returned `"null"`, but this original bug in JS has persisted for nearly two decades, and will likely never be fixed because there's too much existing web content that relies on its buggy behavior that "fixing" the bug would *create* more "bugs" and break a lot of web software.
+Nó sẽ rất tốt (và chính xác) nếu như nó trả về `"null"`, nhưng lỗi này đã tồn tại trong gần hai thập kỷ, và có vẻ sẽ không bao giờ được sửa chữa bời vì có quá nhiều nội dung web tồn tại dựa trên lỗi nàynày nên việc sữa chữa lỗi này sẽ tạo thêm nhiều lỗi khác và làm hỏng nhiều phần mềm web.
 
-If you want to test for a `null` value using its type, you need a compound condition:
+Nếu bạn muốn kiểm tra một giá trị `null` bằng cách sử dụng kiểu dữ liệu của nó, bạn cần một điều kiện tổng hợp:
 
 ```js
 var a = null;
@@ -78,17 +78,17 @@ var a = null;
 (!a && typeof a === "object"); // true
 ```
 
-`null` is the only primitive value that is "falsy" (aka false-like; see Chapter 4) but that also returns `"object"` from the `typeof` check.
+`null` là giá trị giá trị "primitive" duy nhất là "falsy" (còn có tên là "false-like"; xem chương 4) nhưng trả về `"object"` từ toán tử `typeof`.
 
-So what's the seventh string value that `typeof` can return?
+Vậy chuỗi thứ bảy mà `typeof` có thể trả về là gì?
 
 ```js
 typeof function a(){ /* .. */ } === "function"; // true
 ```
 
-It's easy to think that `function` would be a top-level built-in type in JS, especially given this behavior of the `typeof` operator. However, if you read the spec, you'll see it's actually a "subtype" of object. Specifically, a function is referred to as a "callable object" -- an object that has an internal `[[Call]]` property that allows it to be invoked.
+Thật dễ dàng để nghĩ rằng `function` là kiểu dữ liệu dựng sẵn trong JS, đặc biệt khi nó được trả về khi dùng toán tử `typeof`. Tuy nhiên, nếu như bạn đọc đặc tả, bạn sẽ thấy rằng nó thực tế là một "subtype" (kiểu dữ liệu phụ) của `object`. Đặc biệt, hàm còn được gọi là "callable object" (một đối tượng có thể gọi được) -- một đối tượng có thuộc tính `[[Call]]` cho phép nó được thực thi.
 
-The fact that functions are actually objects is quite useful. Most importantly, they can have properties. For example:
+Sự thật thì hàm là một đối tượng rất hữu ích. Quan trọng nhất, nó có thể chứa thuộc tính. Ví dụ:
 
 ```js
 function a(b,c) {
@@ -96,21 +96,21 @@ function a(b,c) {
 }
 ```
 
-The function object has a `length` property set to the number of formal parameters it is declared with.
+Hàm có thuộc tính `length` thể hiện số lượng tham số chính thức được khai báo.
 
 ```js
 a.length; // 2
 ```
 
-Since you declared the function with two formal named parameters (`b` and `c`), the "length of the function" is `2`.
+Vì bạn đã khai báo hàm với hai tham số có tên chính thức là(`b` và `c`), nên thuộc tính "length" của hàm là `2`.
 
-What about arrays? They're native to JS, so are they a special type?
+Mảng thì sao? Nó là dữ liệu cơ sở của JS, vậy nó có phải là một kiểu dữ liệu đặc biệt?
 
 ```js
 typeof [1,2,3] === "object"; // true
 ```
 
-Nope, just objects. It's most appropriate to think of them also as a "subtype" of object (see Chapter 3), in this case with the additional characteristics of being numerically indexed (as opposed to just being string-keyed like plain objects) and maintaining an automatically updated `.length` property.
+Không, nó chỉ là đối tượng. Sẽ thích hợp với suy nghĩ rằng nó cũng là một "subtype" (kiểu dữ liệu phụ) của đối tượng (xem chương 3), trong trường hợp này các phần tử của nó được lập chỉ mục bằng số (trái ngược lại việc dùng khoá là chuỗi như đối tượng đơn giản) và luôn tồn tại thuộc tính `.length` được cập nhật tự động.
 
 ## Values as Types
 
