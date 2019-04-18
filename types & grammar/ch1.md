@@ -114,13 +114,13 @@ Không, nó chỉ là đối tượng. Sẽ thích hợp với suy nghĩ rằng 
 
 ## Values as Types
 
-In JavaScript, variables don't have types -- **values have types**. Variables can hold any value, at any time.
+Trong JavaScript, biến không có kiểu dữ liệu -- **Giá trị mới có kiểu dữ liệu**. Biến có thể giữ bất kỳ giá trị nào, ở bất kỳ thời điểm nảo.
 
-Another way to think about JS types is that JS doesn't have "type enforcement," in that the engine doesn't insist that a *variable* always holds values of the *same initial type* that it starts out with. A variable can, in one assignment statement, hold a `string`, and in the next hold a `number`, and so on.
+Một cách nghĩ khác về kiểu dữ liệu trong JS là JS không có "type enforcement" (kiểu dữ liệu bắt buộc) nghĩa là engine không bắt buộc biến luôn luôn giữ giá trị cùng kiểu dữ liệu với kiểu dữ liệu mà nó được khởi tạo. Biến trong câu lệnh gán có thể giữ giá trị có kiểu `string`, và sau đó có thể giữ giá trị có kiểu `number`, v.v...
 
-The *value* `42` has an intrinsic type of `number`, and its *type* cannot be changed. Another value, like `"42"` with the `string` type, can be created *from* the `number` value `42` through a process called **coercion** (see Chapter 4).
+*Giá trị* `42` có kiểu dữ liệu `number`, và *kiểu dữ liệu* của nó không thể bị thay đổi. Một giá trị khác, như `"42"` với kiểu dữ liệu `string`, có thể được tạo từ kiểu `number` của giá trị `42` thông qua cơ chế **coercion** (**ép kiểu**) (xem chương 4).
 
-If you use `typeof` against a variable, it's not asking "what's the type of the variable?" as it may seem, since JS variables have no types. Instead, it's asking "what's the type of the value *in* the variable?"
+Khi bạn dùng `typeof` với một biến, nó không mang ý nghĩa "Kiểu dữ liệu của biến là gì?", Bời vì biến trong JS không có kiểu dữ liệu. Thay vào đó, nó mang ý nghĩa "Kiểu dữ liệu của giá trị mà biến đang giữ là gì?".
 
 ```js
 var a = 42;
@@ -130,13 +130,13 @@ a = true;
 typeof a; // "boolean"
 ```
 
-The `typeof` operator always returns a string. So:
+Toán tử `typeof` luôn trả về một chuỗi. Nên:
 
 ```js
 typeof typeof 42; // "string"
 ```
 
-The first `typeof 42` returns `"number"`, and `typeof "number"` is `"string"`.
+Câu lệnh `typeof 42` đầu tiên trả về`"number"`, và `typeof "number"` trả về `"string"`.
 
 ### `undefined` vs "undeclared"
 
