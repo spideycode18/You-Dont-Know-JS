@@ -114,7 +114,7 @@ Không, nó chỉ là đối tượng. Sẽ thích hợp với suy nghĩ rằng 
 
 ## Values as Types
 
-Trong JavaScript, biến không có kiểu dữ liệu -- **Giá trị mới có kiểu dữ liệu**. Biến có thể giữ bất kỳ giá trị nào, ở bất kỳ thời điểm nảo.
+Trong JavaScript, biến không có kiểu dữ liệu -- **Giá trị mới có kiểu dữ liệu**. Biến có thể giữ bất kỳ giá trị nào, ở bất kỳ thời điểm nào.
 
 Một cách nghĩ khác về kiểu dữ liệu trong JS là JS không có "type enforcement" (kiểu dữ liệu bắt buộc) nghĩa là engine không bắt buộc biến luôn luôn giữ giá trị cùng kiểu dữ liệu với kiểu dữ liệu mà nó được khởi tạo. Biến trong câu lệnh gán có thể giữ giá trị có kiểu `string`, và sau đó có thể giữ giá trị có kiểu `number`, v.v...
 
@@ -140,7 +140,7 @@ Câu lệnh `typeof 42` đầu tiên trả về`"number"`, và `typeof "number"`
 
 ### `undefined` vs "undeclared"
 
-Variables that have no value *currently*, actually have the `undefined` value. Calling `typeof` against such variables will return `"undefined"`:
+Biến có thể được khai báo nhưng không mang bất kỳ giá trị nào, thì nó sẽ có giá trị `undefined`. Gọi `typeof` với biến đó thì giá trị trả về sẽ là `"undefined"`:
 
 ```js
 var a;
@@ -157,11 +157,11 @@ typeof b; // "undefined"
 typeof c; // "undefined"
 ```
 
-It's tempting for most developers to think of the word "undefined" and think of it as a synonym for "undeclared." However, in JS, these two concepts are quite different.
+Có một điều hấp dẫn là hầu hết các lập trình viên khi nghĩ về từ "undefined" (không xác định) sẽ nghĩ nó đồng nghĩa với "undeclared" (không được khai báo). Tuy nhiên, trong JS, đây là hai kịch bản hoàn toàn khác nhau.
 
-An "undefined" variable is one that has been declared in the accessible scope, but *at the moment* has no other value in it. By contrast, an "undeclared" variable is one that has not been formally declared in the accessible scope.
+Một biến "undefined" là biến được khai báo trong phạm vi có thể truy cập, nhưng tại thời điểm được khai báo nó không chứa bất kỳ giá trị nào. Ngược lại, một biến "undeclared" không đươc khai báo trong phạm vi có thể truy cập.
 
-Consider:
+Xét trường hợp sau:
 
 ```js
 var a;
@@ -170,9 +170,9 @@ a; // undefined
 b; // ReferenceError: b is not defined
 ```
 
-An annoying confusion is the error message that browsers assign to this condition. As you can see, the message is "b is not defined," which is of course very easy and reasonable to confuse with "b is undefined." Yet again, "undefined" and "is not defined" are very different things. It'd be nice if the browsers said something like "b is not found" or "b is not declared," to reduce the confusion!
+Thông báo lỗi mà trình duyệt trả về cho điều kiện này là một nhầm lẫn khó chịu. Như bạn có thể thấy, thông báo "b is not defined" (b không được xác định) ,rất dễ gây nhầm lẫn với "b is undefined" (b không xác định). Xin nhắc lại, "undefined" (không xác định) và "is not defined" (không được xác định) là hai điều rất khác nhau. Sẽ tốt hơn và ít gây nhầm lẫn hơn nếu trình duyệt đưa ra thông báo như "b không được tìm thấy" hay "b không được khai báo".
 
-There's also a special behavior associated with `typeof` as it relates to undeclared variables that even further reinforces the confusion. Consider:
+Còn một điều đặc biệt liên quan đến toán tử `typeof` nữa vì nó liên quan đến biến không được khai báo thậm chí còn gây nhầm lẫn hơn. Xét trường hợp sau:
 
 ```js
 var a;
@@ -182,9 +182,9 @@ typeof a; // "undefined"
 typeof b; // "undefined"
 ```
 
-The `typeof` operator returns `"undefined"` even for "undeclared" (or "not defined") variables. Notice that there was no error thrown when we executed `typeof b`, even though `b` is an undeclared variable. This is a special safety guard in the behavior of `typeof`.
+Toán tử `typeof` trả về `"undefined"` cho cả biến "undeclared" (không được khai báo hoặc không được xác định). Điều đáng chú ý là không có bất kỳ thông báo lỗi nào được trả về khi chúng ta thực thi `typeof b`, dù rằng `b` là biến không được khai báo. This is a special safety guard in the behavior of `typeof`.
 
-Similar to above, it would have been nice if `typeof` used with an undeclared variable returned "undeclared" instead of conflating the result value with the different "undefined" case.
+Tương tự như trên, sẽ tốt hơn nếu khi dùng `typeof` với biến không được khai báo sẽ trả về "undeclared" thay vì kết quả trả về giống với trường hợp "undefined".
 
 ### `typeof` Undeclared
 
