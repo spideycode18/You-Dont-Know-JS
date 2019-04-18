@@ -182,15 +182,15 @@ typeof a; // "undefined"
 typeof b; // "undefined"
 ```
 
-Toán tử `typeof` trả về `"undefined"` cho cả biến "undeclared" (không được khai báo hoặc không được xác định). Điều đáng chú ý là không có bất kỳ thông báo lỗi nào được trả về khi chúng ta thực thi `typeof b`, dù rằng `b` là biến không được khai báo. This is a special safety guard in the behavior of `typeof`.
+Toán tử `typeof` trả về `"undefined"` cho cả biến "undeclared" (không được khai báo hoặc không được xác định). Điều đáng chú ý là không có bất kỳ thông báo lỗi nào được trả về khi chúng ta thực thi `typeof b`, dù rằng `b` là biến không được khai báo. Điều này sẽ đảm bảo an toàn khi sử dụng toán tử `typeof`.
 
 Tương tự như trên, sẽ tốt hơn nếu khi dùng `typeof` với biến không được khai báo sẽ trả về "undeclared" thay vì kết quả trả về giống với trường hợp "undefined".
 
 ### `typeof` Undeclared
 
-Nevertheless, this safety guard is a useful feature when dealing with JavaScript in the browser, where multiple script files can load variables into the shared global namespace.
+Mặc dù vậy, sự đảm bảo an toàn này là một tính năng hữu ích khi làm việc với JavaScript trên trình duyệt, nơi mà rất nhiều tệp tin có thể đưa các biến lên phạm vi toàn cục.
 
-**Note:** Many developers believe there should never be any variables in the global namespace, and that everything should be contained in modules and private/separate namespaces. This is great in theory but nearly impossible in practicality; still it's a good goal to strive toward! Fortunately, ES6 added first-class support for modules, which will eventually make that much more practical.
+**Chi chú:** Rất nhiều lập trình viên tin rằng sẽ không nên có bất kỳ biến toàn cục nào, và mọi thứ nên được đóng gói trong những module và phạm vi riêng biệt. Theo lý thuyết thì điều này rất tuyệt vời nhưng lại bất khả thi trong thực tế; nhưng nó vẫn là một mục tiêu tốt để phấn đấu! May mắn thay, ES6 đã thêm first-class để hỗ trợ cho module, nó sẽ giúp điều đó trở nên thực tế hơn nhiều.
 
 As a simple example, imagine having a "debug mode" in your program that is controlled by a global variable (flag) called `DEBUG`. You'd want to check if that variable was declared before performing a debug task like logging a message to the console. A top-level global `var DEBUG = true` declaration would only be included in a "debug.js" file, which you only load into the browser when you're in development/testing, but not in production.
 
@@ -289,12 +289,12 @@ There are lots of options when designing such functionality. No one pattern here
 
 ## Review
 
-JavaScript has seven built-in *types*: `null`, `undefined`,  `boolean`, `number`, `string`, `object`, `symbol`. They can be identified by the `typeof` operator.
+JavaScript có bảy kiểu dữ liệu dựng sẵn: `null`, `undefined`,  `boolean`, `number`, `string`, `object`, `symbol`. Nó được nhận diện bời toán tử `typeof`.
 
-Variables don't have types, but the values in them do. These types define intrinsic behavior of the values.
+Biến không có kiểu dữ liệu, nhưng giá trị bên trong chúng có. Những kiểu dữ liệu này xác định những hành vi cơ sở của những giá trị đó.
 
-Many developers will assume "undefined" and "undeclared" are roughly the same thing, but in JavaScript, they're quite different. `undefined` is a value that a declared variable can hold. "Undeclared" means a variable has never been declared.
+Nhiều lập trình viên sẽ giả định "undefined" và "undeclared" tương đối giống nhau, nhưng trong JavaScript, chúng rất khác nhau. `undefined` là giá trị mà một biến được khai báo có thể giữ. "Undeclared" nghĩa là biến đó chưa được khai báo.
 
 JavaScript unfortunately kind of conflates these two terms, not only in its error messages ("ReferenceError: a is not defined") but also in the return values of `typeof`, which is `"undefined"` for both cases.
 
-However, the safety guard (preventing an error) on `typeof` when used against an undeclared variable can be helpful in certain cases.
+Tuy nhiên, chức năng bảo vệ (ngăn ngừa lỗi) của `typeof` khi nó được dùng với biến không được khai báo có thể hữu ích trong một số trường hợp.
