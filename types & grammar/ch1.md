@@ -45,7 +45,7 @@ JavaScript định nghĩa bảy kiểu dữ liệu dựng sẵn:
 * `object`
 * `symbol` -- added in ES6!
 
-**Note:** Ngoại trừ `object`, tất cả các kiểu dữ liệu này được gọi là "primitives" (cơ sở).
+**Note:** Ngoại trừ `object`, tất cả các kiểu dữ liệu này được gọi là loại cơ bản (primitives).
 
 Toán tử `typeof` kiểm tra kiểu dữ liệu của giá trị đã cho, và luôn luôn trả về một trong bảy chuỗi, thật ngạc nhiên, nó không trùng khớp 1-1 với bảy kiểu dữ liệu dựng sẵn mà chúng ta đã đề cập ở trên.
 
@@ -192,9 +192,9 @@ Mặc dù vậy, sự đảm bảo an toàn này là một tính năng hữu íc
 
 **Chi chú:** Rất nhiều lập trình viên tin rằng sẽ không nên có bất kỳ biến toàn cục nào, và mọi thứ nên được đóng gói trong những module và phạm vi riêng biệt. Theo lý thuyết thì điều này rất tuyệt vời nhưng lại bất khả thi trong thực tế; nhưng nó vẫn là một mục tiêu tốt để phấn đấu! May mắn thay, ES6 đã thêm first-class để hỗ trợ cho module, nó sẽ giúp điều đó trở nên thực tế hơn nhiều.
 
-As a simple example, imagine having a "debug mode" in your program that is controlled by a global variable (flag) called `DEBUG`. You'd want to check if that variable was declared before performing a debug task like logging a message to the console. A top-level global `var DEBUG = true` declaration would only be included in a "debug.js" file, which you only load into the browser when you're in development/testing, but not in production.
+Ví dụ, tưởng tượng rằng có một "chế độ gỡ lỗi" trong chương trình của bạn mà nó được điều khiển bằng một biết toàn cục (cờ) với tên là `DEBUG`. Bạn sẽ muốn kiểm tra biến đó đã được khai báo hay chưa trước thực hiện những thao tác gỡ lỗi như xuất ra một thông báo. Một khai báo toàn cục`var DEBUG = true` sẽ chỉ được lưu trong tệp tin "debug.js", tệp tin mà bạn chỉ tải lên trình duyệt khi bạn đang trong môi trường phát triển học kiểm thử phần mềm chứ không phải với một sản phẩm hoàn thiện.
 
-However, you have to take care in how you check for the global `DEBUG` variable in the rest of your application code, so that you don't throw a `ReferenceError`. The safety guard on `typeof` is our friend in this case.
+Tuy nhiên, bạn phải quan tâm tới cách kiểm tra biến toàn cục `DEBUG` trong phần còn lại của mã mà bạn lập trình, do đó bạn không thể nảo trả về một `ReferenceError`. Chế độ bảo vệ của `typeof` sẽ là phương án tuyệt vời trong trường hợp này.
 
 ```js
 // oops, this would throw an error!
@@ -208,7 +208,7 @@ if (typeof DEBUG !== "undefined") {
 }
 ```
 
-This sort of check is useful even if you're not dealing with user-defined variables (like `DEBUG`). If you are doing a feature check for a built-in API, you may also find it helpful to check without throwing an error:
+Loại kiểm tra này vẫn hữu ích kể cả khi bạn không xử lý các biến do người dùng định nghĩa (như `DEBUG`). Nếu bạn đang thực hiện một tính năng kiểm tra cho một api dựng sẵn, bạn cũng có thể thấy nó hữu ích với việc không trả ra lỗi:
 
 ```js
 if (typeof atob === "undefined") {
@@ -291,10 +291,10 @@ There are lots of options when designing such functionality. No one pattern here
 
 JavaScript có bảy kiểu dữ liệu dựng sẵn: `null`, `undefined`,  `boolean`, `number`, `string`, `object`, `symbol`. Nó được nhận diện bời toán tử `typeof`.
 
-Biến không có kiểu dữ liệu, nhưng giá trị bên trong chúng có. Những kiểu dữ liệu này xác định những hành vi cơ sở của những giá trị đó.
+Biến không có kiểu dữ liệu, nhưng giá trị bên trong chúng có. Những kiểu dữ liệu này xác định những hành vi có sẵn của những giá trị đó.
 
 Nhiều lập trình viên sẽ giả định "undefined" và "undeclared" tương đối giống nhau, nhưng trong JavaScript, chúng rất khác nhau. `undefined` là giá trị mà một biến được khai báo có thể giữ. "Undeclared" nghĩa là biến đó chưa được khai báo.
 
-JavaScript unfortunately kind of conflates these two terms, not only in its error messages ("ReferenceError: a is not defined") but also in the return values of `typeof`, which is `"undefined"` for both cases.
+Thật không may JavaScript lại kết học hai thuật ngữ này lại làm một, không chỉ trong việc thông báo lỗi "ReferenceError: a is not defined") mà còn trong việc trả về giá trị khi dùng `typeof`, chúng đều là `"undefined"` cho cả hai trường hợp.
 
 Tuy nhiên, chức năng bảo vệ (ngăn ngừa lỗi) của `typeof` khi nó được dùng với biến không được khai báo có thể hữu ích trong một số trường hợp.
