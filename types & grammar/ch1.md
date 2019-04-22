@@ -216,7 +216,7 @@ if (typeof atob === "undefined") {
 }
 ```
 
-**Note:** If you're defining a "polyfill" for a feature if it doesn't already exist, you probably want to avoid using `var` to make the `atob` declaration. If you declare `var atob` inside the `if` statement, this declaration is hoisted (see the *Scope & Closures* title of this series) to the top of the scope, even if the `if` condition doesn't pass (because the global `atob` already exists!). In some browsers and for some special types of global built-in variables (often called "host objects"), this duplicate declaration may throw an error. Omitting the `var` prevents this hoisted declaration.
+**Note:** Nếu bạn đang định nghĩa một "polyfill" cho một tính năng mà không biết nó đã tồn tại hay chưa, có lẽ bạn nên tránh dùng `var` thể tạo khai báo `atob`. nếu bạn khai báo `var atob` trong câu lệnh `if`, khai báo này sẽ bị kéo lên (xem cuốn *Scope & Closures* của đợt phát hành này) trên cùng của phạm vi, kể cả khi điều kiện `if` không được thông qua ( bởi vì biến toàn cục `atob` đã tồn tại trước đó!). Trong một vài trình duyệt và một vài kiểu dữ liệu đặc biệt của biến toàn cục dựng sẵn (thường được gọi là những đối tượng chủ (host objects)), những khai báo trùng lắp này có thể trả ra lỗi. Việc bỏ qua `var` ngăn chặn khai báo này.
 
 Another way of doing these checks against global variables but without the safety guard feature of `typeof` is to observe that all global variables are also properties of the global object, which in the browser is basically the `window` object. So, the above checks could have been done (quite safely) as:
 
@@ -295,6 +295,6 @@ Biến không có kiểu dữ liệu, nhưng giá trị bên trong chúng có. N
 
 Nhiều lập trình viên sẽ giả định "undefined" và "undeclared" tương đối giống nhau, nhưng trong JavaScript, chúng rất khác nhau. `undefined` là giá trị mà một biến được khai báo có thể giữ. "Undeclared" nghĩa là biến đó chưa được khai báo.
 
-Thật không may JavaScript lại kết học hai thuật ngữ này lại làm một, không chỉ trong việc thông báo lỗi "ReferenceError: a is not defined") mà còn trong việc trả về giá trị khi dùng `typeof`, chúng đều là `"undefined"` cho cả hai trường hợp.
+Thật không may JavaScript lại kết hợp hai thuật ngữ này lại làm một, không chỉ trong việc thông báo lỗi "ReferenceError: a is not defined") mà còn trong việc trả về giá trị khi dùng `typeof`, chúng đều là `"undefined"` cho cả hai trường hợp.
 
 Tuy nhiên, chức năng bảo vệ (ngăn ngừa lỗi) của `typeof` khi nó được dùng với biến không được khai báo có thể hữu ích trong một số trường hợp.
