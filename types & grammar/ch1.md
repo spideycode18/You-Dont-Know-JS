@@ -19,19 +19,19 @@ That's by no means a perfect definition. But it's good enough for this discussio
 
 # A Type By Any Other Name...
 
-Beyond academic definition disagreements, why does it matter if JavaScript has *types* or not?
+Ngoài những bất đồng về định nghĩa, tại sao JavaScript có kiểu dữ liệu hay không lại quan trọng?
 
-Having a proper understanding of each *type* and its intrinsic behavior is absolutely essential to understanding how to properly and accurately convert values to different types (see Coercion, Chapter 4). Nearly every JS program ever written will need to handle value coercion in some shape or form, so it's important you do so responsibly and with confidence.
+Có một sự hiểu biết đúng đắn về từng kiểu dữ liệu và hành vi đặc thù của nó là vô cùng cần thiết để hiểu đúng và chính xác cách chuyển đổi giá trị giữa các kiểu dữ liệu khác nhau (xem Ép buộc (Coercion), Chương 4). Hầu như mỗi chương trình JS được viết ra sẽ cần xử lý việc ép kiểu cho giá trị trong một vài trường hợp, vì vậy điều quan trọng là bạn phải thực hiện một cách có trách nhiệm và tự tin.
 
-If you have the `number` value `42`, but you want to treat it like a `string`, such as pulling out the `"2"` as a character in position `1`, you obviously must first convert (coerce) the value from `number` to `string`.
+Nếu bạn có `number` với giá trị `42`, nhưng bạn muốn xử lý nó như một `string`, chẳng hạn lấy `"2"` ra như là một ký tự ở vị trí `1`, Bạn rõ ràng phải chuyển đổi (ép kiểu) giá trị từ `number` sang `string`.
 
-That seems simple enough.
+Điều đó có vẻ đơn giản.
 
-But there are many different ways that such coercion can happen. Some of these ways are explicit, easy to reason about, and reliable. But if you're not careful, coercion can happen in very strange and surprising ways.
+Nhưng có rất nhiều cách khác nhau để việc ép kiểu này xảy ra. Một vài cách rõ ràng, dễ dàng để giải thích và đáng tin cậy. Nhưng nếu bạn không cẩn thận, việc ép kiểu sẽ diễn ra một cách rất lạ lùng và đáng ngạc nhiên.
 
-Coercion confusion is perhaps one of the most profound frustrations for JavaScript developers. It has often been criticized as being so *dangerous* as to be considered a flaw in the design of the language, to be shunned and avoided.
+Sự nhầm lẫn của ép kiểu có lẽ là một trong những điều gây chán nản nhất của những lập trình viên JavaScript. Nó thường bị chỉ trích là nguy hiểm đến mức bị coi là một lỗ hổng trong thiết kế của ngôn ngữ, bị xa lánh và tránh né.
 
-Armed with a full understanding of JavaScript types, we're aiming to illustrate why coercion's *bad reputation* is largely overhyped and somewhat undeserved -- to flip your perspective, to seeing coercion's power and usefulness. But first, we have to get a much better grip on values and types.
+Được trang bị đầy đủ kiến thức về kiểu dữ liệu của JavaScript, chúng tôi hướng tới mục tiêu minh hoạ tại sao tiếng xấu của ép kiểu phần lớn được kiểm soát và phần nào không được quan tâm -- để lật lại quan điểm của bạn, để thấy được sức mạnh và sự hữu ích của ép kiểu. Nhưng trước tiên, chúng ta phải nắm rõ giá trị và kiểu dữ liệu.
 
 ## Kiểu dữ liệu dựng sẵn
 
@@ -218,7 +218,7 @@ if (typeof atob === "undefined") {
 
 **Note:** Nếu bạn đang định nghĩa một "polyfill" cho một tính năng mà không biết nó đã tồn tại hay chưa, có lẽ bạn nên tránh dùng `var` thể tạo khai báo `atob`. nếu bạn khai báo `var atob` trong câu lệnh `if`, khai báo này sẽ bị kéo lên (xem cuốn *Scope & Closures* của đợt phát hành này) trên cùng của phạm vi, kể cả khi điều kiện `if` không được thông qua ( bởi vì biến toàn cục `atob` đã tồn tại trước đó!). Trong một vài trình duyệt và một vài kiểu dữ liệu đặc biệt của biến toàn cục dựng sẵn (thường được gọi là những đối tượng chủ (host objects)), những khai báo trùng lắp này có thể trả ra lỗi. Việc bỏ qua `var` ngăn chặn khai báo này.
 
-Another way of doing these checks against global variables but without the safety guard feature of `typeof` is to observe that all global variables are also properties of the global object, which in the browser is basically the `window` object. So, the above checks could have been done (quite safely) as:
+Một cách khác để thực hiện các kiểm tra này đối với các biến toàn cục nhưng không có tính năng bảo vệ an toàn của typeof là xem rằng tất cả các biến toàn cục cũng là thuộc tính của đối tượng toàn cục, trong trình duyệt là đối tượng `window`. Vì vậy các kiểm tra trên được thực hiện (khá an toàn) như:
 
 ```js
 if (window.DEBUG) {
@@ -230,38 +230,38 @@ if (!window.atob) {
 }
 ```
 
-Unlike referencing undeclared variables, there is no `ReferenceError` thrown if you try to access an object property (even on the global `window` object) that doesn't exist.
+Không giống việc tham chiếu đến các biến không được khai báo, lỗi `ReferenceError` sẽ không bị trả về nếu bạn truy cập đến một thuộc tính của đối tượng (kể cả dối tượng toàn cục `window`) mà nó không tồn tại.
 
-On the other hand, manually referencing the global variable with a `window` reference is something some developers prefer to avoid, especially if your code needs to run in multiple JS environments (not just browsers, but server-side node.js, for instance), where the global object may not always be called `window`.
+Mặt khác, tham chiếu thủ công đến biến toàn cục với tham chiếu `window` là điều mà một số lập trình viên muốn tránh, đặc biệt là nếu mã của bạn cần chạy trong nhiều môi trường JS (ví dụ, không chỉ trình duyệt, mà là node.js phía máy chủ), ở đó đối tượng toàn cầu có thể không được gọi `window`.
 
-Technically, this safety guard on `typeof` is useful even if you're not using global variables, though these circumstances are less common, and some developers may find this design approach less desirable. Imagine a utility function that you want others to copy-and-paste into their programs or modules, in which you want to check to see if the including program has defined a certain variable (so that you can use it) or not:
+Về mặt kỹ thuật, chức năng bảo vệ an toàn này của `typeof` hữu dụng kể cả khi bạn không dùng cho những biến toàn cục, mặc dù những trường hợp này ít phổ biến hơn, và một số lập trình viên ít mong muốn dùng cách tiếp cận này hơn. Thử tưởng tượng bạn một hàm tiện ích mà bạn muốn người khác sap chéo và dán vào chương trình hoặc mô đun của họ, trong đó bạn muốn kiểm tra xem chương trình đã khai báo một biến nào đó (biến mà bạn đinh dùng) chưa:
 
 ```js
 function doSomethingCool() {
 	var helper =
 		(typeof FeatureXYZ !== "undefined") ?
 		FeatureXYZ :
-		function() { /*.. default feature ..*/ };
+		function() { /*.. tính năng mặc định ..*/ };
 
 	var val = helper();
 	// ..
 }
 ```
 
-`doSomethingCool()` tests for a variable called `FeatureXYZ`, and if found, uses it, but if not, uses its own. Now, if someone includes this utility in their module/program, it safely checks if they've defined `FeatureXYZ` or not:
+`doSomethingCool()` kiểm tra biến `FeatureXYZ`, nếu nó đã được định nghĩa thì dùng nó, nếu chưa chúng ta sẽ dùng hàm mặc định mà chúng ta định nghĩa cho nó. Bây giờ nếu ai đó nhập tiện ích này vào chương trình/ mô đun của họ, sẽ an toàn nếu kiểm tra xem họ đã định nghĩa `FeatureXYZ` hay chưa:
 
 ```js
-// an IIFE (see "Immediately Invoked Function Expressions"
-// discussion in the *Scope & Closures* title of this series)
+// IIFE (xem "Immediately Invoked Function Expressions"
+// thảo luận ở cuốn *Scope & Closures* của phát hành này)
 (function(){
-	function FeatureXYZ() { /*.. my XYZ feature ..*/ }
+	function FeatureXYZ() { /*.. tính năng XYZ của chúng ta ..*/ }
 
-	// include `doSomethingCool(..)`
+	// truyền `doSomethingCool(..)`
 	function doSomethingCool() {
 		var helper =
 			(typeof FeatureXYZ !== "undefined") ?
 			FeatureXYZ :
-			function() { /*.. default feature ..*/ };
+			function() { /*.. tính năng mặc định ..*/ };
 
 		var val = helper();
 		// ..
@@ -271,9 +271,9 @@ function doSomethingCool() {
 })();
 ```
 
-Here, `FeatureXYZ` is not at all a global variable, but we're still using the safety guard of `typeof` to make it safe to check for. And importantly, here there is *no* object we can use (like we did for global variables with `window.___`) to make the check, so `typeof` is quite helpful.
+Ở đây, `FeatureXYZ` không phải là biến toàn cục, nhưng chúng ta vẫn có thể dùng chức năng bảo vệ an toàn của `typeof` để giúp nó an toàn cho việc kiểm tra. Quan trọng hơn, ở đây chúng ta không có đối tượng nào để sử dụng (giống như cách chúng ta thực hiện với biến toàn cục như `window.___`) để thực hiện việc kiểm tra, nên `typeof` khá hữu dụng.
 
-Other developers would prefer a design pattern called "dependency injection," where instead of `doSomethingCool()` inspecting implicitly for `FeatureXYZ` to be defined outside/around it, it would need to have the dependency explicitly passed in, like:
+Nhiều lập trình viên khác sẽ thích mẫu thiết kế "Dependency Injection" hơn, ở đó thay vì `doSomethingCool()` inspecting implicitly for `FeatureXYZ` to be defined outside/around it, it would need to have the dependency explicitly passed in, like:
 
 ```js
 function doSomethingCool(FeatureXYZ) {
@@ -285,7 +285,7 @@ function doSomethingCool(FeatureXYZ) {
 }
 ```
 
-There are lots of options when designing such functionality. No one pattern here is "correct" or "wrong" -- there are various tradeoffs to each approach. But overall, it's nice that the `typeof` undeclared safety guard gives us more options.
+Có rất nhiều lựa chọn khi thiết kế một hàm như vậy. Không thiết kế nào ở đây là đúng hay sai -- có những sự đánh đổi khác nhau giữa các cách tiếp cận. Nhưng nhìn chung, chức năng bảo vệ an toàn khỏi việc không được khai báo của `typeof` cho chúng ta thêm nhiều lựa chọn hơn.
 
 ## Review
 
