@@ -1,5 +1,5 @@
 # You Don't Know JS: Types & Grammar
-# Chapter 1: Types
+# Chương 1: Kiểu dữ liệu
 
 Most developers would say that a dynamic language (like JS) does not have *types*. Let's see what the ES5.1 specification (http://www.ecma-international.org/ecma-262/5.1/) has to say on the topic:
 
@@ -17,7 +17,7 @@ In other words, if both the engine and the developer treat value `42` (the numbe
 
 That's by no means a perfect definition. But it's good enough for this discussion. And it's consistent with how JS describes itself.
 
-# A Type By Any Other Name...
+# Ý nghĩa của kiểu dữ liệu...
 
 Ngoài những bất đồng về định nghĩa, tại sao JavaScript có kiểu dữ liệu hay không lại quan trọng?
 
@@ -112,7 +112,7 @@ typeof [1,2,3] === "object"; // true
 
 Không, nó chỉ là đối tượng. Sẽ thích hợp với suy nghĩ rằng nó cũng là một "subtype" (kiểu dữ liệu phụ) của đối tượng (xem chương 3), trong trường hợp này các phần tử của nó được lập chỉ mục bằng số (trái ngược lại việc dùng khoá là chuỗi như đối tượng đơn giản) và luôn tồn tại thuộc tính `.length` được cập nhật tự động.
 
-## Values as Types
+## Giá trị như kiểu dữ liệu
 
 Trong JavaScript, biến không có kiểu dữ liệu -- **Giá trị mới có kiểu dữ liệu**. Biến có thể giữ bất kỳ giá trị nào, ở bất kỳ thời điểm nào.
 
@@ -287,7 +287,7 @@ function doSomethingCool(FeatureXYZ) {
 
 Có rất nhiều lựa chọn khi thiết kế một hàm như vậy. Không thiết kế nào ở đây là đúng hay sai -- có những sự đánh đổi khác nhau giữa các cách tiếp cận. Nhưng nhìn chung, chức năng bảo vệ an toàn khỏi việc không được khai báo của `typeof` cho chúng ta thêm nhiều lựa chọn hơn.
 
-## Review
+## Đánh giá
 
 JavaScript có bảy kiểu dữ liệu dựng sẵn: `null`, `undefined`,  `boolean`, `number`, `string`, `object`, `symbol`. Nó được nhận diện bời toán tử `typeof`.
 
