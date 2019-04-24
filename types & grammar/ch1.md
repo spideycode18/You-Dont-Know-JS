@@ -1,29 +1,29 @@
 # You Don't Know JS: Types & Grammar
 # Chương 1: Kiểu dữ liệu
 
-Most developers would say that a dynamic language (like JS) does not have *types*. Let's see what the ES5.1 specification (http://www.ecma-international.org/ecma-262/5.1/) has to say on the topic:
+Phần lớn các lập trình viên đều nói rằng ngôn ngữ động (dynamic language) (như JS) không có kiểu dữ liệu. Cùng xem đặc tả ES5.1 (http://www.ecma-international.org/ecma-262/5.1/) nói gì về chủ đề này:
 
-> Algorithms within this specification manipulate values each of which has an associated type. The possible value types are exactly those defined in this clause. Types are further sub classified into ECMAScript language types and specification types.
+> Mỗi giá trị được thao tác bởi một thuật toán trong đặc tả này có một kiểu dữ liệu tương ứng. The possible value types are exactly those defined in this clause. Types are further sub classified into ECMAScript language types and specification types.
 >
-> An ECMAScript language type corresponds to values that are directly manipulated by an ECMAScript programmer using the ECMAScript language. The ECMAScript language types are Undefined, Null, Boolean, String, Number, and Object.
+> Kiểu dữ liệu của ngôn ngữ ECMAScript tương ứng với giá trị mà chúng được thao tác trực tiếp bởi lập trình viên ECMAScript, người sử dụng ngôn ngữ ECMAScript. Các kiểu dữ liệu trong ngôn ngữ ECMAScript là Undefined, Null, Boolean, String, Number, và Object.
 
-Now, if you're a fan of strongly typed (statically typed) languages, you may object to this usage of the word "type." In those languages, "type" means a whole lot *more* than it does here in JS.
+Bây giờ, nếu bạn là một người hâm mộ ngôn ngữ tĩnh (strongly typed/statically typed), bạn có thể phản đối cách sử dụng từ "kiểu dữ liệu".Trong các ngôn ngữ đó, "kiểu dữ liệu" có nghĩa nhiều hơn rất nhiều so với trong JS.
 
-Some people say JS shouldn't claim to have "types," and they should instead be called "tags" or perhaps "subtypes".
+Một số người nói rằng JS không nên yêu cầu phải có "kiểu dữ liệu" và thay vào đó họ nên được gọi là "thẻ" (tags) hoặc có thể là "kiểu dữ liệu con" (subtypes).
 
-Bah! We're going to use this rough definition (the same one that seems to drive the wording of the spec): a *type* is an intrinsic, built-in set of characteristics that uniquely identifies the behavior of a particular value and distinguishes it from other values, both to the engine **and to the developer**.
+Không! Chúng ta sẽ sử dụng định nghĩa sơ bộ sau (nó có vẻ giống với cách định nghĩa trong mô tả, chỉ là cách dùng từ khác đi): một kiểu dữ liệu là một tập hợp các đặc điểm đặc thù, có sẵn, xác định hành vi riêng biệt của một giá trị cụ thể và phân biệt nó với các giá trị khác, cho cả công cụ và lập trình viên.
 
-In other words, if both the engine and the developer treat value `42` (the number) differently than they treat value `"42"` (the string), then those two values have different *types* -- `number` and `string`, respectively. When you use `42`, you are *intending* to do something numeric, like math. But when you use `"42"`, you are *intending* to do something string'ish, like outputting to the page, etc. **These two values have different types.**
+Nói cách khác, nếu cả công cụ và lập trình viên đều xem giá trị `42` (số) khác với giá trị `"42"` (chuỗi), thì hai giá trị đó có kiểu dữ liệu tương ứng khác nhau -- `number` và `string`. Khi bạn dùng `42`, bạn đang định làm điều gì đó với số, như toán học. Nhưng khi bạn dùng `"42"`, bạn đang dự định làm điều gì đó với chuỗi, như xuất dữ liệu ra một trang, v.v... **Hai giá trị này có kiểu dữ liệu khác nhau.**
 
-That's by no means a perfect definition. But it's good enough for this discussion. And it's consistent with how JS describes itself.
+Đó không phải là một định nghĩa hoàn hảo. Nhưng nó đủ tốt cho thảo luận này. Và nó phù hợp với cách mà JS đã mô tả chính nó.
 
 # Ý nghĩa của kiểu dữ liệu...
 
 Ngoài những bất đồng về định nghĩa, tại sao JavaScript có kiểu dữ liệu hay không lại quan trọng?
 
-Có một sự hiểu biết đúng đắn về từng kiểu dữ liệu và hành vi đặc thù của nó là vô cùng cần thiết để hiểu đúng và chính xác cách chuyển đổi giá trị giữa các kiểu dữ liệu khác nhau (xem Ép buộc (Coercion), Chương 4). Hầu như mỗi chương trình JS được viết ra sẽ cần xử lý việc ép kiểu cho giá trị trong một vài trường hợp, vì vậy điều quan trọng là bạn phải thực hiện một cách có trách nhiệm và tự tin.
+Có một sự hiểu biết đúng đắn về từng kiểu dữ liệu và hành vi đặc thù của nó là vô cùng cần thiết để hiểu đúng và chính xác cách chuyển đổi giá trị giữa các kiểu dữ liệu khác nhau (xem Ép kiểu (Coercion), Chương 4). Hầu như mỗi chương trình JS được viết ra sẽ cần xử lý việc ép kiểu cho giá trị trong một vài trường hợp, vì vậy điều quan trọng là bạn phải thực hiện một cách có trách nhiệm và tự tin.
 
-Nếu bạn có `number` với giá trị `42`, nhưng bạn muốn xử lý nó như một `string`, chẳng hạn lấy `"2"` ra như là một ký tự ở vị trí `1`, Bạn rõ ràng phải chuyển đổi (ép kiểu) giá trị từ `number` sang `string`.
+Nếu bạn có một `number` với giá trị `42`, nhưng bạn muốn xử lý nó như một `string`, chẳng hạn lấy `"2"` ra như là một ký tự ở vị trí `1`, Bạn rõ ràng phải chuyển đổi (ép kiểu) giá trị từ `number` sang `string`.
 
 Điều đó có vẻ đơn giản.
 
@@ -43,9 +43,9 @@ JavaScript định nghĩa bảy kiểu dữ liệu dựng sẵn:
 * `number`
 * `string`
 * `object`
-* `symbol` -- added in ES6!
+* `symbol` -- được thêm trong ES6!
 
-**Note:** Ngoại trừ `object`, tất cả các kiểu dữ liệu này được gọi là loại cơ bản (primitives).
+**Note:** Ngoại trừ `object`, tất cả các kiểu dữ liệu này được gọi là loại nguyên thuỷ (primitives).
 
 Toán tử `typeof` kiểm tra kiểu dữ liệu của giá trị đã cho, và luôn luôn trả về một trong bảy chuỗi, thật ngạc nhiên, nó không trùng khớp 1-1 với bảy kiểu dữ liệu dựng sẵn mà chúng ta đã đề cập ở trên.
 
@@ -60,7 +60,7 @@ typeof { life: 42 }  === "object";    // true
 typeof Symbol()      === "symbol";    // true
 ```
 
-Sáu loại này có kiểu dữ liệu tương ứng và trả về chuỗi trùng với tên như trên. `Symbol` là kiểu dữ liệu mới trong ES6 và sẽ được đề cập đến trong chương 3.
+Sáu loại này có giá trị của kiểu dữ liệu tương ứng và trả về chuỗi trùng với tên như trên. `Symbol` là kiểu dữ liệu mới trong ES6 và sẽ được đề cập đến trong chương 3.
 
 Như bạn đã thấy, tôi đã loại `null` khỏi danh sách trên. Nó *đặc biệt* -- đặc biệt ở chỗ nó sẽ có lỗi khi chúng ra dùng nó với toán tử `typeof`:
 
@@ -68,7 +68,7 @@ Như bạn đã thấy, tôi đã loại `null` khỏi danh sách trên. Nó *đ
 typeof null === "object"; // true
 ```
 
-Nó sẽ rất tốt (và chính xác) nếu như nó trả về `"null"`, nhưng lỗi này đã tồn tại trong gần hai thập kỷ, và có vẻ sẽ không bao giờ được sửa chữa bời vì có quá nhiều nội dung web tồn tại dựa trên lỗi nàynày nên việc sữa chữa lỗi này sẽ tạo thêm nhiều lỗi khác và làm hỏng nhiều phần mềm web.
+Sẽ rất tốt (và chính xác) nếu như nó trả về `"null"`, nhưng lỗi này đã tồn tại trong gần hai thập kỷ, và có vẻ sẽ không bao giờ được sửa chữa bời vì có quá nhiều nội dung web tồn tại dựa trên lỗi này nên việc sữa chữa lỗi này sẽ tạo thêm nhiều lỗi khác và làm hỏng nhiều phần mềm web.
 
 Nếu bạn muốn kiểm tra một giá trị `null` bằng cách sử dụng kiểu dữ liệu của nó, bạn cần một điều kiện tổng hợp:
 
@@ -78,7 +78,7 @@ var a = null;
 (!a && typeof a === "object"); // true
 ```
 
-`null` là giá trị giá trị "primitive" duy nhất là "falsy" (còn có tên là "false-like"; xem chương 4) nhưng trả về `"object"` từ toán tử `typeof`.
+`null` là giá trị nguyên thuỷ (primitive) duy nhất là "sai" (falsy) (còn có tên là "false-like"; xem chương 4) nhưng trả về `"object"` từ toán tử `typeof`.
 
 Vậy chuỗi thứ bảy mà `typeof` có thể trả về là gì?
 
@@ -86,7 +86,7 @@ Vậy chuỗi thứ bảy mà `typeof` có thể trả về là gì?
 typeof function a(){ /* .. */ } === "function"; // true
 ```
 
-Thật dễ dàng để nghĩ rằng `function` là kiểu dữ liệu dựng sẵn trong JS, đặc biệt khi nó được trả về khi dùng toán tử `typeof`. Tuy nhiên, nếu như bạn đọc đặc tả, bạn sẽ thấy rằng nó thực tế là một "subtype" (kiểu dữ liệu phụ) của `object`. Đặc biệt, hàm còn được gọi là "callable object" (một đối tượng có thể gọi được) -- một đối tượng có thuộc tính `[[Call]]` cho phép nó được thực thi.
+Chúng ta ễ dàng để nghĩ rằng `function` là kiểu dữ liệu dựng sẵn trong JS, đặc biệt khi nó được trả về khi dùng toán tử `typeof`. Tuy nhiên, nếu như bạn đọc đặc tả, bạn sẽ thấy rằng nó thực tế là một kiểu dữ liệu con (subtype) của `object`. Đặc biệt, hàm còn được gọi là "đối tượng có thể gọi được" (callable object) -- một đối tượng có thuộc tính `[[Call]]` cho phép nó được thực thi.
 
 Sự thật thì hàm là một đối tượng rất hữu ích. Quan trọng nhất, nó có thể chứa thuộc tính. Ví dụ:
 
@@ -102,7 +102,7 @@ Hàm có thuộc tính `length` thể hiện số lượng tham số chính th�
 a.length; // 2
 ```
 
-Vì bạn đã khai báo hàm với hai tham số có tên chính thức là(`b` và `c`), nên thuộc tính "length" của hàm là `2`.
+Vì bạn đã khai báo hàm với hai tham số có tên chính thức là (`b` và `c`), nên thuộc tính `length` của hàm là `2`.
 
 Mảng thì sao? Nó là dữ liệu cơ sở của JS, vậy nó có phải là một kiểu dữ liệu đặc biệt?
 
@@ -110,15 +110,15 @@ Mảng thì sao? Nó là dữ liệu cơ sở của JS, vậy nó có phải là
 typeof [1,2,3] === "object"; // true
 ```
 
-Không, nó chỉ là đối tượng. Sẽ thích hợp với suy nghĩ rằng nó cũng là một "subtype" (kiểu dữ liệu phụ) của đối tượng (xem chương 3), trong trường hợp này các phần tử của nó được lập chỉ mục bằng số (trái ngược lại việc dùng khoá là chuỗi như đối tượng đơn giản) và luôn tồn tại thuộc tính `.length` được cập nhật tự động.
+Không, nó chỉ là đối tượng. Sẽ thích hợp với suy nghĩ rằng nó cũng là một "kiểu dữ liệu con" (subtype) của đối tượng (xem chương 3), trong trường hợp này các phần tử của nó được lập chỉ mục bằng số (trái ngược lại việc dùng khoá là chuỗi như đối tượng đơn giản) và luôn tồn tại thuộc tính `.length` được cập nhật tự động.
 
 ## Giá trị như kiểu dữ liệu
 
 Trong JavaScript, biến không có kiểu dữ liệu -- **Giá trị mới có kiểu dữ liệu**. Biến có thể giữ bất kỳ giá trị nào, ở bất kỳ thời điểm nào.
 
-Một cách nghĩ khác về kiểu dữ liệu trong JS là JS không có "type enforcement" (kiểu dữ liệu bắt buộc) nghĩa là engine không bắt buộc biến luôn luôn giữ giá trị cùng kiểu dữ liệu với kiểu dữ liệu mà nó được khởi tạo. Biến trong câu lệnh gán có thể giữ giá trị có kiểu `string`, và sau đó có thể giữ giá trị có kiểu `number`, v.v...
+Một cách nghĩ khác về kiểu dữ liệu trong JS là JS không có "kiểu dữ liệu bắt buộc" (type enforcement) nghĩa là công cụ không bắt buộc biến luôn luôn giữ giá trị cùng kiểu dữ liệu với kiểu dữ liệu mà nó được khởi tạo. Biến trong câu lệnh gán có thể giữ giá trị có kiểu `string`, và sau đó có thể giữ giá trị có kiểu `number`, v.v...
 
-*Giá trị* `42` có kiểu dữ liệu `number`, và *kiểu dữ liệu* của nó không thể bị thay đổi. Một giá trị khác, như `"42"` với kiểu dữ liệu `string`, có thể được tạo từ kiểu `number` của giá trị `42` thông qua cơ chế **coercion** (**ép kiểu**) (xem chương 4).
+*Giá trị* `42` có kiểu dữ liệu `number`, và *kiểu dữ liệu* của nó không thể bị thay đổi. Một giá trị khác, như `"42"` với kiểu dữ liệu `string`, có thể được tạo từ kiểu `number` của giá trị `42` thông qua cơ chế **ép kiểu** (coercion) (xem chương 4).
 
 Khi bạn dùng `typeof` với một biến, nó không mang ý nghĩa "Kiểu dữ liệu của biến là gì?", Bời vì biến trong JS không có kiểu dữ liệu. Thay vào đó, nó mang ý nghĩa "Kiểu dữ liệu của giá trị mà biến đang giữ là gì?".
 
@@ -170,9 +170,9 @@ a; // undefined
 b; // ReferenceError: b is not defined
 ```
 
-Thông báo lỗi mà trình duyệt trả về cho điều kiện này là một nhầm lẫn khó chịu. Như bạn có thể thấy, thông báo "b is not defined" (b không được xác định) ,rất dễ gây nhầm lẫn với "b is undefined" (b không xác định). Xin nhắc lại, "undefined" (không xác định) và "is not defined" (không được xác định) là hai điều rất khác nhau. Sẽ tốt hơn và ít gây nhầm lẫn hơn nếu trình duyệt đưa ra thông báo như "b không được tìm thấy" hay "b không được khai báo".
+Thông báo lỗi mà trình duyệt trả về cho điều kiện này là một nhầm lẫn khó chịu. Như bạn có thể thấy, thông báo "b is not defined" (b không được xác định) ,rất dễ gây nhầm lẫn với "b is undefined" (b không xác định). Xin nhắc lại, "undefined" (không xác định) và "is not defined" (không được xác định) là hai điều rất khác nhau. Sẽ tốt hơn và ít gây nhầm lẫn hơn nếu trình duyệt đưa ra thông báo như "b is not found" (b không được tìm thấy) hay "b is not declared" (b không được khai báo).
 
-Còn một điều đặc biệt liên quan đến toán tử `typeof` nữa vì nó liên quan đến biến không được khai báo thậm chí còn gây nhầm lẫn hơn. Xét trường hợp sau:
+Còn một điều đặc biệt liên quan đến toán tử `typeof` nữa vì nó liên quan đến biến không được khai báo, thậm chí còn gây nhầm lẫn hơn. Xét trường hợp sau:
 
 ```js
 var a;
@@ -190,9 +190,9 @@ Tương tự như trên, sẽ tốt hơn nếu khi dùng `typeof` với biến k
 
 Mặc dù vậy, sự đảm bảo an toàn này là một tính năng hữu ích khi làm việc với JavaScript trên trình duyệt, nơi mà rất nhiều tệp tin có thể đưa các biến lên phạm vi toàn cục.
 
-**Chi chú:** Rất nhiều lập trình viên tin rằng sẽ không nên có bất kỳ biến toàn cục nào, và mọi thứ nên được đóng gói trong những module và phạm vi riêng biệt. Theo lý thuyết thì điều này rất tuyệt vời nhưng lại bất khả thi trong thực tế; nhưng nó vẫn là một mục tiêu tốt để phấn đấu! May mắn thay, ES6 đã thêm first-class để hỗ trợ cho module, nó sẽ giúp điều đó trở nên thực tế hơn nhiều.
+**Chi chú:** Rất nhiều lập trình viên tin rằng sẽ không nên có bất kỳ biến toàn cục nào, và mọi thứ nên được đóng gói trong những mô đun và phạm vi riêng biệt. Theo lý thuyết thì điều này rất tuyệt vời nhưng lại bất khả thi trong thực tế; nhưng nó vẫn là một mục tiêu tốt để phấn đấu! May mắn thay, ES6 đã thêm first-class để hỗ trợ cho mô đun, nó sẽ giúp điều đó trở nên thực tế hơn nhiều.
 
-Ví dụ, tưởng tượng rằng có một "chế độ gỡ lỗi" trong chương trình của bạn mà nó được điều khiển bằng một biết toàn cục (cờ) với tên là `DEBUG`. Bạn sẽ muốn kiểm tra biến đó đã được khai báo hay chưa trước thực hiện những thao tác gỡ lỗi như xuất ra một thông báo. Một khai báo toàn cục`var DEBUG = true` sẽ chỉ được lưu trong tệp tin "debug.js", tệp tin mà bạn chỉ tải lên trình duyệt khi bạn đang trong môi trường phát triển học kiểm thử phần mềm chứ không phải với một sản phẩm hoàn thiện.
+Ví dụ, tưởng tượng rằng có một "chế độ gỡ lỗi" trong chương trình của bạn mà nó được điều khiển bằng một biết toàn cục (cờ) với tên là `DEBUG`. Bạn sẽ muốn kiểm tra biến đó đã được khai báo hay chưa trước khi thực hiện những thao tác gỡ lỗi như xuất ra một thông báo. Một khai báo toàn cục`var DEBUG = true` sẽ chỉ được lưu trong tệp tin "debug.js", tệp tin mà bạn chỉ tải lên trình duyệt khi bạn đang trong môi trường phát triển hoặc kiểm thử phần mềm chứ không phải với một sản phẩm hoàn thiện.
 
 Tuy nhiên, bạn phải quan tâm tới cách kiểm tra biến toàn cục `DEBUG` trong phần còn lại của mã mà bạn lập trình, do đó bạn không thể nảo trả về một `ReferenceError`. Chế độ bảo vệ của `typeof` sẽ là phương án tuyệt vời trong trường hợp này.
 
@@ -234,7 +234,7 @@ Không giống việc tham chiếu đến các biến không được khai báo,
 
 Mặt khác, tham chiếu thủ công đến biến toàn cục với tham chiếu `window` là điều mà một số lập trình viên muốn tránh, đặc biệt là nếu mã của bạn cần chạy trong nhiều môi trường JS (ví dụ, không chỉ trình duyệt, mà là node.js phía máy chủ), ở đó đối tượng toàn cầu có thể không được gọi `window`.
 
-Về mặt kỹ thuật, chức năng bảo vệ an toàn này của `typeof` hữu dụng kể cả khi bạn không dùng cho những biến toàn cục, mặc dù những trường hợp này ít phổ biến hơn, và một số lập trình viên ít mong muốn dùng cách tiếp cận này hơn. Thử tưởng tượng bạn một hàm tiện ích mà bạn muốn người khác sap chéo và dán vào chương trình hoặc mô đun của họ, trong đó bạn muốn kiểm tra xem chương trình đã khai báo một biến nào đó (biến mà bạn đinh dùng) chưa:
+Về mặt kỹ thuật, chức năng bảo vệ an toàn này của `typeof` hữu dụng kể cả khi bạn không dùng cho những biến toàn cục, mặc dù những trường hợp này ít phổ biến hơn, và một số lập trình viên ít mong muốn dùng cách tiếp cận này hơn. Thử tưởng tượng bạn có một hàm tiện ích mà bạn muốn người khác sap chéo và dán vào chương trình hoặc mô đun của họ, trong đó bạn muốn kiểm tra xem chương trình đã khai báo một biến nào đó (biến mà bạn định dùng) chưa:
 
 ```js
 function doSomethingCool() {
@@ -271,7 +271,7 @@ function doSomethingCool() {
 })();
 ```
 
-Ở đây, `FeatureXYZ` không phải là biến toàn cục, nhưng chúng ta vẫn có thể dùng chức năng bảo vệ an toàn của `typeof` để giúp nó an toàn cho việc kiểm tra. Quan trọng hơn, ở đây chúng ta không có đối tượng nào để sử dụng (giống như cách chúng ta thực hiện với biến toàn cục như `window.___`) để thực hiện việc kiểm tra, nên `typeof` khá hữu dụng.
+Ở đây, `FeatureXYZ` không phải là biến toàn cục, nhưng chúng ta vẫn có thể dùng chức năng bảo vệ an toàn của `typeof` để giúp nó an toàn cho việc kiểm tra. Quan trọng hơn, ở đây chúng ta không có đối tượng nào để sử dụng (giống như cách chúng ta thực hiện với biến toàn cục như `window.___`) cho việc thực hiện kiểm tra, nên `typeof` khá hữu dụng.
 
 Nhiều lập trình viên khác sẽ thích mẫu thiết kế "Dependency Injection" hơn, ở đó thay vì `doSomethingCool()` inspecting implicitly for `FeatureXYZ` to be defined outside/around it, it would need to have the dependency explicitly passed in, like:
 
