@@ -1,13 +1,13 @@
 # You Don't Know JS: Types & Grammar
-# Chapter 2: Values
+# Chương 2: Giá trị
 
-`array`s, `string`s, and `number`s are the most basic building-blocks of any program, but JavaScript has some unique characteristics with these types that may either delight or confound you.
+`array`, `string`, và `number` là những thành phần cơ bản nhất của bất kì chương trình nào, nhưng JavaScript có vài đặc điểm riêng biệt với những loại này, điều đó có thể làm bạn cảm thấy thích thú hoặc bối rối.
 
-Let's look at several of the built-in value types in JS, and explore how we can more fully understand and correctly leverage their behaviors.
+Cùng xem một vài giá trị của kiểu dữ liệu dựng sẵn trong JS, và khám phá xem làm thế nào để chúng ta có thể hiểu một cách đầy đủ và vận dụng chính xác các hành vi của chúng.
 
-## Arrays
+## Mảng
 
-As compared to other type-enforced languages, JavaScript `array`s are just containers for any type of value, from `string` to `number` to `object` to even another `array` (which is how you get multidimensional `array`s).
+As compared to other type-enforced languages, Mảng trong JavaScript có thể chứa bất kì giá trị của kiểu dữ liệu nào, từ `string` đến `number` hay `object` thậm chí cả `array` (điều mà giúp các bạn định nghĩa được `array` đa chiều).
 
 ```js
 var a = [ 1, "2", [3] ];
@@ -17,7 +17,7 @@ a[0] === 1;		// true
 a[2][0] === 3;	// true
 ```
 
-You don't need to presize your `array`s (see "Arrays" in Chapter 3), you can just declare them and add values as you see fit:
+Bạn không cần phải chỉ định kích thước cho `array` của bạn (xem "Arrays" ở chương 3), bạn chỉ cần khai báo chúng và thêm các giá trị mà bạn thấy phù hợp:
 
 ```js
 var a = [ ];
@@ -31,9 +31,9 @@ a[2] = [ 3 ];
 a.length;	// 3
 ```
 
-**Warning:** Using `delete` on an `array` value will remove that slot from the `array`, but even if you remove the final element, it does **not** update the `length` property, so be careful! We'll cover the `delete` operator itself in more detail in Chapter 5.
+**Cảnh báo:** Sử dụng `delete` cho giá trị trong `array` sẽ chỉ loại bỏ vị trí đó khỏi `array`, ngay cả khi bạn loại bỏ thành phần cuối cùng, nó cũng **không** cập nhật thuộc tính `length`, cho nên hãy cẩn thận! Chúng ta sẽ đề cập đến toán tử `delete` chi tiết hơn trong chương 5.
 
-Be careful about creating "sparse" `array`s (leaving or creating empty/missing slots):
+Hãy cẩn thận khi tạo `array` "thưa thớt" (để lại hoặc tạo ra các vị trí trống/ thiếu):
 
 ```js
 var a = [ ];
